@@ -16,7 +16,7 @@ with app.app_context():
     shack = Restaurant(name="Karen's Pizza Shack", address='address1')
     bistro = Restaurant(name="Sanjay's Pizza", address='address2')
     palace = Restaurant(name="Kiki's Pizza", address='address3')
-    restaurants = [shack, bistro, palace]
+    db.session.add_all([shack, bistro, palace])
 
     print("Creating pizzas...")
 
@@ -25,17 +25,14 @@ with app.app_context():
         name="Geri", ingredients="Dough, Tomato Sauce, Cheese, Pepperoni")
     california = Pizza(
         name="Melanie", ingredients="Dough, Sauce, Ricotta, Red peppers, Mustard")
-    pizzas = [cheese, pepperoni, california]
+    db.session.add_all([cheese, pepperoni, california])
 
     print("Creating RestaurantPizza...")
 
     pr1 = RestaurantPizza(restaurant=shack, pizza=cheese, price=1)
     pr2 = RestaurantPizza(restaurant=bistro, pizza=pepperoni, price=4)
     pr3 = RestaurantPizza(restaurant=palace, pizza=california, price=5)
-    restaurantPizzas = [pr1, pr2, pr3]
-    db.session.add_all(restaurants)
-    db.session.add_all(pizzas)
-    db.session.add_all(restaurantPizzas)
-    db.session.commit()
+    db.session.add_all([pr1, pr2, pr3])
 
+    db.session.commit()
     print("Seeding done!")
